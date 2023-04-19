@@ -1,0 +1,27 @@
+WITH cohorts AS (
+  SELECT
+    card_id,
+    MIN(date) AS cohort_date
+  FROM
+    my_table
+  GROUP BY
+    card_id
+),
+
+SELECT
+  cohorts.cohort_date,
+  DATE_TRUNC('month', date) AS purchase_month,
+  COUNT(DISTINCT cohorts.card_id) AS cohort_size,
+  COUNT(DISTINCT CASE WHEN DATE_TRUNC('month', date) = cohorts.cohort_date THEN card_id END) AS cohort_customers,
+  COUNT(DISTINCT CASE WHEN DATE_TRUNC('month', date) = DATE_TRUNC('month', cohorts.cohort_date) THEN card_id END) AS cohort_purchases,
+  COUNT(DISTINCT CASE WHEN DATE_TRUNC('month', date) = DATE_TRUNC('month', cohorts.cohort_date) THEN card_id END) / COUNT(DISTINCT cohorts.card_id) AS retention_rate
+FROM
+  my_table
+JOIN
+  cohorts
+ON
+  my_table.card_id = cohorts.card_id
+GROUP BY
+  1, 2
+ORDER BY
+  1, 2
