@@ -3,7 +3,7 @@ WITH cohorts AS (
     card_id,
     MIN(date) AS cohort_date
   FROM
-    my_table
+    sales
   GROUP BY
     card_id
 ),
