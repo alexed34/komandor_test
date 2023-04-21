@@ -11,11 +11,9 @@
 Развернуть на linux не получилось. Docer и SuperSet  установил все запустилось судя по логам но подключатся через браузер не хотел. 
 Воспользовался onlain сервисом [preset.io](preset.io)
 
-Ссылки ведут на один и тот же дашборд. SuperSet создал разные url.
+[Дашборд SuperSet](https://7898282f.us1a.app.preset.io/superset/dashboard/de17ac6a-8dec-499a-96b7-2ce387bc6257/?native_filters_key=NEFsCCl_nLpUBWNf9oQ1A1m_4X6In_ATADvgrYX-Dsd_3TdwV7JkEXBu9DwQOQ0w)
 
-[ссылка 1](https://7898282f.us1a.app.preset.io/superset/dashboard/p/zY1AP5OZBRj/)
 
-[ссылка 2](https://7898282f.us1a.app.preset.io/superset/dashboard/8/?native_filters_key=xV4Qs0XkffKWrYZgREyUeJSoPcz3b8jQ_K0rLoTochfKxkV4_-8n2KWOKEgg1zJH)
 
 Выяснилось что при попытке войти по ссылке требуется ввести email я на всякий случай добавил доступ для *yulenkovayue@sm-komandor.ru*
 
