@@ -11,11 +11,23 @@
 Развернуть на linux не получилось. Docer и SuperSet  установил все запустилось судя по логам но подключатся через браузер не хотел. 
 Воспользовался onlain сервисом [preset.io](preset.io)
 
-[Дашборд SuperSet](https://7898282f.us1a.app.preset.io/superset/dashboard/de17ac6a-8dec-499a-96b7-2ce387bc6257/?native_filters_key=NEFsCCl_nLpUBWNf9oQ1A1m_4X6In_ATADvgrYX-Dsd_3TdwV7JkEXBu9DwQOQ0w)
+[Дашборд SuperSet](https://7898282f.us1a.app.preset.io/superset/dashboard/8/?native_filters_key=aFJjV_4NUui1urdRlkVWRhfeIZ7-9N5cF89M_lm0IdV_h2opgQ5bBOrsqW2F_aiu)
 
+Так как приписку к тестовому о подключении базы данных заметил не сразу сделал двумя способами.
 
+### Первый способ
 
-Выяснилось что при попытке войти по ссылке требуется ввести email я на всякий случай добавил доступ для *yulenkovayue@sm-komandor.ru*
+Chart: komandor_csv_file
+
+В csv файл добавил дополнителный столбец с датой первой покупки клиента. Загрузил новый файл в Superset через GoogleSheets. И создал Chart перетаскивая столбцы без sql кода. 
+sql код работал, но очень медленно 4 минуты.
+
+### Второй способ
+
+Chart: komandor_post
+
+с помощью вашей базы даннных PostgresSQL.
+(После очень неудобной работы с csv файлом, работа с бд одно удовольствие.)
 
 Код sql для когортного анализа.
 
@@ -34,17 +46,14 @@ INNER JOIN cohorts ON new_date.card_id = cohorts.card_id
 GROUP BY 1, 2
 ORDER BY 1, 2
 ```
-Я не разобрался какой диалект в SuperSet, но что бы код заработал, пришлось немного упростить отказатся от extract. На extract запрос ломался.
 
-Код работает на сервисе, но очень медленно 4 минуты в SQL Lab.
-Поступил проще. Создал в файле еще одно поле куда добавил первую покупку клиента и в SuperSet создал график-таблицу простым перетаскиванием полей.
-
+На основе этого запроса получил данные и cформировал chart.
 
 ## Дашборд Datalens
 
 На всякий случай сделал в Datalens
 
-Принцип тот же дополнительное поля с первой покупкой клиента.
+Принцип тот же что и первым chart дополнительное поля с первой покупкой клиента.
 
 [Datalens](https://datalens.yandex.ru/0dfrxnaqroa4q-komandor)
 
