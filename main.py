@@ -33,7 +33,7 @@ def start(update: Update, context: CallbackContext) -> None:
         InlineKeyboardButton("Добавить продажу", callback_data='1')
 
     ],
-        [InlineKeyboardButton("получить данные за месяц ", callback_data='2'),
+        [InlineKeyboardButton("получить данные за последний месяц ", callback_data='2'),
          InlineKeyboardButton("получить данные за год ", callback_data='3')]
     ]
 
@@ -50,20 +50,19 @@ def button(update: Update, context: CallbackContext) -> None:
     # Some clients may have trouble otherwise. See https://core.telegram.org/bots/api#callbackquery
     query.answer()
     if query.data == '1':
-        query.edit_message_text(text=f"Напиши  количество, товар и цену через запятую")
+        query.edit_message_text(text=f"Напиши  товар, номер покупателя и количество через запятую")
     if query.data == '2':
         cursor.execute(
-            f"select count(amount), sum(price) from sales where date between date(current_date, '-1 months') and date(current_date, '1 day')")
+            f"select count(distinct card_id), sum(checks) from sales where date between date(current_date, '-1 months') and date(current_date, '1 day')")
         records = cursor.fetchall()
-        print(records)
         query.edit_message_text(
-            text=f"За последний месяц было продано товаров в колличестве {records[0][0]} штук, на стоимость {records[0][1]} руб")
+            text=f"За последний месяц было продано товаров  уникальным покупателям {records[0][0]} , в количестве {records[0][1]} руб")
     if query.data == '3':
         cursor.execute(
-            f"select count(amount), sum(price) from sales where date between date(current_date, '-12 months') and date(current_date, '1 day')")
+            f"select count(distinct card_id), sum(checks)  from sales where date between date(current_date, '-12 months') and date(current_date, '1 day')")
         records = cursor.fetchall()
         query.edit_message_text(
-            text=f"За последние 12 месяцев было продано товаров в колличестве {records[0][0]} штук, на стоимость {records[0][1]} руб")
+            text=f"За последние 12 месяцев было продано товаров  уникальным покупателям {records[0][0]} , в количестве  {records[0][1]} руб")
 
 
 def help_command(update: Update, context: CallbackContext) -> None:
@@ -78,7 +77,7 @@ def add_base(update: Update, context: CallbackContext):
 
         datet = str(datetime.datetime.now())
         data_b = (datet, amount, product, price)
-        cursor.execute(f"INSERT INTO sales (date, amount, product, price) VALUES ( ?,?,?,?)", data_b)
+        cursor.execute(f"INSERT INTO sales (date, lvl_5, card_id, checks) VALUES ( ?,?,?,?)", data_b)
         conn.commit()
         text = f" вы добавили запись дата : {datet}, количество : {amount}, товар : {product}, цена: {price} "
         context.bot.send_message(chat_id=update.effective_chat.id, text=text)
