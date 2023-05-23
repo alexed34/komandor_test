@@ -1,3 +1,5 @@
+[ссылка на тестовое задание](https://drive.google.com/file/d/1lxGI4WkTMiTkONj679DjNdzEh97qt05t/view?usp=sharing)
+
 ## Телеграм бот
 
  [Бот телеграм](https://t.me/komandor_test2_bot)
